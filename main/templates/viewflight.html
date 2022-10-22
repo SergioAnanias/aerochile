@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block titulo %} {% endblock %}
+
+{% block script %}
+
+{% endblock %}
+
+{% block content %}
+
+<h1>Vuelo {{ flight.code }}</h1>
+<h3>Origen: {{ flight.origin }}</h3>
+<h3>Destino: {{ flight.destination }}</h3>
+<h3>Fecha: {{ flight.flightdate }}</h3>
+<h3>Avion: {{ flight.planes.model }} Patente: {{ flight.planes.enrollment }}</h3>
+{% if flight.completed %}
+<h3>Completado</h3>
+{% elif flight.scheduled %}
+<h4>Agendado</h4>
+{% endif %}
+<h5>Pasajeros del vuelo: {{ flight.code}} </h5>
+<table class="table">
+<thead>
+    <tr>
+        <th>Nombre</th>
+        <th>RUT o Pasaporte</th>
+        <th>Fecha de Nacimiento</th>
+        <th>Vuelo</th>
+        <th>Vacuna</th>
+    </tr>
+</thead>
+<tbody>
+    
+    {% for passanger in passangers %}
+    <tr>
+        <td>{{ passanger.name }}</td>
+        <td>{{ passanger.rut }}</td>
+        <td>{{ passanger.birthday }}</td>
+        <td>{{ passanger.travel.code }}</td>
+        <td>{{ passanger.vaccine.name }}</td>
+    </tr>
+    {% endfor %}
+    
+</tbody>
+</table>
+{% endblock %}

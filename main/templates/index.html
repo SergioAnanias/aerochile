@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block titulo %} {% endblock %}
+
+{% block script %}
+
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Bienvenido {{ usuario.first_name }}</h1>
+<a href="flights/new" class="btn btn-primary">Crear vuelo</a>
+{% if travels %}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Codigo</th>
+            <th scope="col">Origen</th>
+            <th scope="col">Destino</th>
+            <th scope="col">Avión</th>
+            <th scope="col">Patente</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for travel in travels %}
+        {% if travel.scheduled %}
+        <tr style="background-color:lightgreen">
+            <td><a href="flights/{{travel.code}}">{{ travel.code }}</a></td>
+            <td>{{ travel.origin }}</td>
+            <td>{{ travel.destination }}</td>
+            <td>{{ travel.planes.model }}</td>
+            <td>{{ travel.planes.enrollment }}</td>
+            <td>{{ travel.flightdate }}</td>
+            <td>
+                <a href="flights/{{travel.code}}/newpassenger" class="btn btn-primary">Agregar Pasajero</a>
+                <a href="completed/{{travel.code}}" class="btn btn-primary">Completar</a>
+            </td>
+        </tr>
+        {% elif travel.completed %}
+        <tr style="background-color:lightcoral">
+            <td><a href="flights/{{travel.code}}">{{ travel.code }}</a></td>
+            <td>{{ travel.origin }}</td>
+            <td>{{ travel.destination }}</td>
+            <td>{{ travel.planes.model }}</td>
+            <td>{{ travel.planes.enrollment }}</td>
+            <td>{{ travel.flightdate }}</td>
+        </tr>
+        {% endif%}
+        {% endfor %}
+    </tbody>
+    
+</table>
+{% else %}
+<h2>No hay vuelos agendados</h2>
+{% endif %}
+{% endblock %}
